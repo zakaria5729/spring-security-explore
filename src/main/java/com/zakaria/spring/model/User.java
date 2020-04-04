@@ -9,10 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
+@Table(name = "users")
+@JsonIgnoreProperties( value = {"password"}, allowSetters = true)
 public class User {
 
 	@Id
@@ -25,6 +29,8 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	
+	private int active;
+	
 	private String roles = "";
 	private String permissions = "";
 	
@@ -35,6 +41,7 @@ public class User {
 		this.password = password;
 		this.roles = roles;
 		this.permissions = permissions;
+		this.active = 1;
 	}
 	
 	public Long getId() {
@@ -47,6 +54,14 @@ public class User {
 
 	public String getUsername() {
 		return username;
+	}
+	
+	public int getActive() {
+		return active;
+	}
+	
+	public void setActive(int active) {
+		this.active = active;
 	}
 
 	public void setUsername(String username) {
